@@ -13,6 +13,7 @@
 
     <modules>
         <module>common</module>
+        <module>service</module>
     </modules>
 
     <properties>
@@ -31,6 +32,7 @@
         <hutool.version>5.8.24</hutool.version>
         <fastJson2.version>2.0.23</fastJson2.version>
         <redisson.version>3.16.1</redisson.version>
+        <common.version>0.0.1-SNAPSHOT</common.version>
     </properties>
 
     <dependencies>
