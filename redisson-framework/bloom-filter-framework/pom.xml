@@ -4,26 +4,21 @@
 
     <parent>
         <groupId>com.east.sea</groupId>
-        <artifactId>fresh</artifactId>
+        <artifactId>redisson-framework</artifactId>
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>service</artifactId>
-    <packaging>pom</packaging>
+    <artifactId>bloom-filter-framework</artifactId>
+    <packaging>jar</packaging>
+    <description>布隆过滤器</description>
 
-    <name>service</name>
-    <description>服务</description>
-
-    <modules>
-        <module>trig-Genie</module>
-        <module>e-commerce-platform</module>
-    </modules>
+    <name>bloom-filter-framework</name>
 
     <dependencies>
         <dependency>
             <groupId>com.east.sea</groupId>
-            <artifactId>common</artifactId>
+            <artifactId>redisson-common</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>

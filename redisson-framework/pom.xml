@@ -1,7 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <parent>
         <groupId>com.east.sea</groupId>
         <artifactId>fresh</artifactId>
@@ -9,15 +8,13 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>service</artifactId>
+    <artifactId>redisson-framework</artifactId>
     <packaging>pom</packaging>
-
-    <name>service</name>
-    <description>服务</description>
+    <description>redisson框架</description>
 
     <modules>
-        <module>trig-Genie</module>
-        <module>e-commerce-platform</module>
+        <module>bloom-filter-framework</module>
+        <module>redisson-common</module>
     </modules>
 
     <dependencies>

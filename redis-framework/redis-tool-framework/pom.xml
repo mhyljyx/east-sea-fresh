@@ -4,26 +4,20 @@
 
     <parent>
         <groupId>com.east.sea</groupId>
-        <artifactId>fresh</artifactId>
+        <artifactId>redis-framework</artifactId>
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>service</artifactId>
-    <packaging>pom</packaging>
+    <artifactId>redis-tool-framework</artifactId>
 
-    <name>service</name>
-    <description>服务</description>
-
-    <modules>
-        <module>trig-Genie</module>
-        <module>e-commerce-platform</module>
-    </modules>
+    <name>redis-tool-framework</name>
+    <description>redis工具框架</description>
 
     <dependencies>
         <dependency>
             <groupId>com.east.sea</groupId>
-            <artifactId>common</artifactId>
+            <artifactId>redis-common</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>

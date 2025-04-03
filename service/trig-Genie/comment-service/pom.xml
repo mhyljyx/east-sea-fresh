@@ -4,27 +4,21 @@
 
     <parent>
         <groupId>com.east.sea</groupId>
-        <artifactId>fresh</artifactId>
+        <artifactId>trig-Genie</artifactId>
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>service</artifactId>
-    <packaging>pom</packaging>
+    <artifactId>comment-service</artifactId>
+    <packaging>jar</packaging>
 
-    <name>service</name>
-    <description>服务</description>
-
-    <modules>
-        <module>trig-Genie</module>
-        <module>e-commerce-platform</module>
-    </modules>
+    <name>comment-service</name>
+    <description>评论区服务</description>
 
     <dependencies>
         <dependency>
-            <groupId>com.east.sea</groupId>
-            <artifactId>common</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
         </dependency>
     </dependencies>
 

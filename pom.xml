@@ -14,6 +14,8 @@
     <modules>
         <module>common</module>
         <module>service</module>
+        <module>redisson-framework</module>
+        <module>redis-framework</module>
     </modules>
 
     <properties>
@@ -31,7 +33,7 @@
         <spring-cloud.version>2021.0.8</spring-cloud.version>
         <hutool.version>5.8.24</hutool.version>
         <fastJson2.version>2.0.23</fastJson2.version>
-        <redisson.version>3.16.1</redisson.version>
+        <redisson.version>3.45.1</redisson.version>
         <common.version>0.0.1-SNAPSHOT</common.version>
     </properties>
 

@@ -6,15 +6,30 @@
         <groupId>com.east.sea</groupId>
         <artifactId>service</artifactId>
         <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>trig-Genie</artifactId>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
 
     <name>trig-Genie</name>
     <description>旅小秘系统</description>
+    <modules>
+        <module>comment-service</module>
+    </modules>
 
     <dependencies>
+        <dependency>
+            <groupId>com.east.sea</groupId>
+            <artifactId>common</artifactId>
+            <version>${common.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-web</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
     </dependencies>
 
 </project>

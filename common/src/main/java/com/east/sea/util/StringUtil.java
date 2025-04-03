@@ -1,5 +1,6 @@
 package com.east.sea.util;
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,8 +15,8 @@ import java.util.Map;
  * @description: String工具
  * @author: tztang
  **/
+@Slf4j
 public class StringUtil {
-	private final static Logger logger = LoggerFactory.getLogger(StringUtil.class);
 
 	/**
 	 * 判断字符串不为空
@@ -61,7 +62,7 @@ public class StringUtil {
 				try {
 					baos.close();
 				} catch (IOException e) {
-					logger.error("关闭流失败！");
+					log.error("关闭流失败！");
 				}
 			}
 		}
