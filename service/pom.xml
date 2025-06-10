@@ -13,11 +13,12 @@
     <packaging>pom</packaging>
 
     <name>service</name>
-    <description>服务</description>
+    <description>旅小秘服务</description>
 
     <modules>
         <module>trig-Genie</module>
         <module>e-commerce-platform</module>
+        <module>common-service</module>
     </modules>
 
     <dependencies>
@@ -25,6 +26,10 @@
             <groupId>com.east.sea</groupId>
             <artifactId>common</artifactId>
             <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
         </dependency>
     </dependencies>
 

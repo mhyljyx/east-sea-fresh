@@ -1,6 +1,5 @@
 package com.east.sea.handler;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 
 import java.util.Arrays;

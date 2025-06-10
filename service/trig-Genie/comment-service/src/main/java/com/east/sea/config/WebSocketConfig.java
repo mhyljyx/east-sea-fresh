@@ -2,7 +2,6 @@ package com.east.sea.config;
 
 import com.east.sea.handler.BarrageWebSocketHandler;
 import com.east.sea.handler.ChatWebSocketHandler;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
