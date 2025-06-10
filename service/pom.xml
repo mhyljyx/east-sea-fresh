@@ -19,6 +19,7 @@
         <module>trig-Genie</module>
         <module>e-commerce-platform</module>
         <module>common-service</module>
+        <module>auth-service</module>
     </modules>
 
     <dependencies>
@@ -30,6 +31,7 @@
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
+            <version>${flyway.version}</version>
         </dependency>
     </dependencies>
 

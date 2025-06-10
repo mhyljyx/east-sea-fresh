@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.east.sea.config.RedissonCommonAutoConfiguration
+  com.east.sea.com.east.sea.config.RedissonCommonAutoConfiguration

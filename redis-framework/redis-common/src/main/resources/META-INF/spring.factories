@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.east.sea.config.RedisFrameWorkAutoConfig
+  com.east.sea.com.east.sea.config.RedisFrameWorkAutoConfig

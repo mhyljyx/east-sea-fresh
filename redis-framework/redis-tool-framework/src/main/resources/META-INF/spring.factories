@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.east.sea.redis.config.RedisCacheAutoConfig
+  com.east.sea.redis.com.east.sea.config.RedisCacheAutoConfig
