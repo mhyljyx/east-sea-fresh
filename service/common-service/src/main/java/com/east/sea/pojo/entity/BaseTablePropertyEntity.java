@@ -1,4 +1,4 @@
-package pojo;
+package com.east.sea.pojo.entity;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
