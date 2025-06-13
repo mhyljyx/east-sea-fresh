@@ -1,0 +1,19 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: third-party-api
+          uri: http://localhost:8083
+          predicates:
+            - Path=/api/third/**  # 例如第三方访问走 /api/third/*
+          filters:
+            - StripPrefix=2
+            - name: ThirdPartyAuthFilter
+
+        - id: local-api
+          uri: http://localhost:8081
+          predicates:
+            - Path=/api/local/**  # 本地系统访问
+          filters:
+            - StripPrefix=2
+            - name: LocalAuthFilter
