@@ -18,8 +18,8 @@
     <dependencies>
         <dependency>
             <groupId>com.east.sea</groupId>
-            <artifactId>common-service</artifactId>
-            <version>${common-service.version}</version>
+            <artifactId>common</artifactId>
+            <version>${common.version}</version>
         </dependency>
         <dependency>
             <groupId>org.bouncycastle</groupId>
