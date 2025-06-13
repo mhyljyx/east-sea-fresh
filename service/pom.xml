@@ -20,13 +20,18 @@
         <module>e-commerce-platform</module>
         <module>common-service</module>
         <module>auth-service</module>
+        <module>gateway-service</module>
     </modules>
+
+    <properties>
+        <common-service.version>0.0.1-SNAPSHOT</common-service.version>
+    </properties>
 
     <dependencies>
         <dependency>
             <groupId>com.east.sea</groupId>
             <artifactId>common</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${common.version}</version>
         </dependency>
         <dependency>
             <groupId>org.flywaydb</groupId>

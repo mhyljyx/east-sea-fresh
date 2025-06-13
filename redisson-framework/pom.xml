@@ -17,11 +17,15 @@
         <module>redisson-common</module>
     </modules>
 
+    <properties>
+        <redisson-common.version>0.0.1-SNAPSHOT</redisson-common.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>com.east.sea</groupId>
             <artifactId>common</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${common.version}</version>
         </dependency>
     </dependencies>
 

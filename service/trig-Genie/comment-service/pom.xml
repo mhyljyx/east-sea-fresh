@@ -19,7 +19,7 @@
         <dependency>
             <groupId>com.east.sea</groupId>
             <artifactId>common-service</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${common-service.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -18,7 +18,7 @@
         <dependency>
             <groupId>com.east.sea</groupId>
             <artifactId>redis-common</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${redis-common.version}</version>
         </dependency>
     </dependencies>
 
