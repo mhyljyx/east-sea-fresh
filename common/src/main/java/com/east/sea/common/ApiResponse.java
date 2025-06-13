@@ -74,7 +74,8 @@ public class ApiResponse<T> implements Serializable {
 
     public static <T> ApiResponse<T> ok(T t) {
         ApiResponse<T> apiResponse = new ApiResponse<T>();
-        apiResponse.code = 0;
+        apiResponse.code = BaseCode.SUCCESS.getCode();
+        apiResponse.message = BaseCode.SUCCESS.getMsg();
         apiResponse.setData(t);
         return apiResponse;
     }
