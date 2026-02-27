@@ -13,4 +13,5 @@ public class ArgumentError {
 	private String argumentName;
 	
 	private String message;
+
 }

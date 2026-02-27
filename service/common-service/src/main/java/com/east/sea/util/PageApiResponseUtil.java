@@ -2,7 +2,7 @@ package com.east.sea.util;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.east.sea.common.ApiResponse;
-import com.east.sea.pojo.struct.PageResult;
+import com.east.sea.pojo.vo.PageResult;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 

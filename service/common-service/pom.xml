@@ -11,7 +11,7 @@
 
     <artifactId>common-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
     <name>common-service</name>
     <description>微服务公共模块</description>
 

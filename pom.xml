@@ -14,8 +14,6 @@
     <modules>
         <module>common</module>
         <module>service</module>
-        <module>redisson-framework</module>
-        <module>redis-framework</module>
     </modules>
 
     <properties>

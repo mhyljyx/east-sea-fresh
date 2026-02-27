@@ -15,7 +15,6 @@
     <name>trig-Genie</name>
     <description>旅小秘系统</description>
     <modules>
-        <module>comment-service</module>
     </modules>
 
     <dependencies>

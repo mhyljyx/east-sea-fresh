@@ -17,7 +17,6 @@
 
     <modules>
         <module>trig-Genie</module>
-        <module>e-commerce-platform</module>
         <module>common-service</module>
         <module>auth-service</module>
         <module>gateway-service</module>
@@ -27,12 +26,19 @@
         <common-service.version>0.0.1-SNAPSHOT</common-service.version>
     </properties>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.east.sea</groupId>
+                <artifactId>common</artifactId>
+                <version>${common.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
-        <dependency>
-            <groupId>com.east.sea</groupId>
-            <artifactId>common</artifactId>
-            <version>${common.version}</version>
-        </dependency>
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
