@@ -15,7 +15,7 @@ public enum BaseCode {
 
     UNAUTHORIZED(401, "认证失败"),
 
-    FORBIDDEN(403, "授权失败"),
+    FORBIDDEN(403, "权限不足"),
     
     UID_WORK_ID_ERROR(500,"uid_work_id设置失败"),
     
