@@ -12,6 +12,10 @@ public enum BaseCode {
     SUCCESS(0, "OK"),
     
     SYSTEM_ERROR(-1,"系统异常，请稍后重试"),
+
+    UNAUTHORIZED(401, "认证失败"),
+
+    FORBIDDEN(403, "授权失败"),
     
     UID_WORK_ID_ERROR(500,"uid_work_id设置失败"),
     

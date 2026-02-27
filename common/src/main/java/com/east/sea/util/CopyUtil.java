@@ -37,24 +37,26 @@ public class CopyUtil {
      * @param from   源对象（不需要加注解）
      * @param target 目标对象（字段上带有 @EditType 注解）
      * @param eType  控制字段是否复制的操作类型（如 "create"、"modify"）
-     * @param <T>    对象类型
      *
      * @throws RuntimeException 如果字段访问失败或赋值异常
      */
-    public static <T> void copyProperties(T from, T target, String eType) {
+    public static void copyProperties(Object from, Object target, String eType) {
         for (Field targetField : target.getClass().getDeclaredFields()) {
             EditType editType = targetField.getAnnotation(EditType.class);
-            if (editType == null || Arrays.stream(editType.value()).noneMatch(val -> val.equals(eType))) {
-                continue; // 无注解或不包含 eType，跳过
+            if (editType == null ||
+                    Arrays.stream(editType.value()).noneMatch(eType::equals)) {
+                continue;
             }
             try {
                 Field fromField = from.getClass().getDeclaredField(targetField.getName());
                 if (!fromField.getType().equals(targetField.getType())) continue;
                 fromField.setAccessible(true);
                 targetField.setAccessible(true);
-                targetField.set(target, fromField.get(from));
+                Object value = fromField.get(from);
+                if (value != null) {
+                    targetField.set(target, value);
+                }
             } catch (NoSuchFieldException ignored) {
-                // from 对象没有该字段，跳过
             } catch (Exception e) {
                 throw new RuntimeException("复制属性失败: " + targetField.getName(), e);
             }

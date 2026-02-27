@@ -6,6 +6,7 @@
 3. **工程化思维**：默认代码用于生产系统，而非 Demo
 4. **最小侵入原则**：在已有架构下补充，而不是推倒重来
 5. **安全第一**：默认考虑权限、校验、异常、边界条件
+6. 思考前先同步一下本地文件
 
 
 ---
@@ -39,9 +40,9 @@
 - 全小写,按业务域拆分,基础包名controller,service,service/impl,pojo,pojo/entity,pojo/vo,pojo/dto,pojo/response,mapper
 - 解释：
 - ```
-  entity（数据库实体）：和数据库表一一对应,例如数据表cm_user,实体类命名为CmUserEntity
-  dto（数据传输对象）：服务层之间传输数据,例如CmUserQueryDTO
-  vo（视图对象）：返回给前端的数据结构,例如CmUserVO
+  entity（数据库实体）：和数据库表一一对应
+  dto（数据传输对象）：服务层之间传输数据
+  vo（视图对象）：返回给前端的数据结构
   response（统一返回结构）
   ```
 
@@ -60,6 +61,9 @@
     - `AcAccessService`
     - `VisDeviceApiService`
     - `AcDoorStatusEnum`
+    - `CmUserEntity`
+    - `CmUserQueryDTO`
+    - `CmUserVO`
 
 #### 方法名
 
@@ -88,6 +92,8 @@
  * 订单创建服务
  *
  * 负责订单创建、校验及初始化逻辑
+ * @author tztang
+ * 日期
  */
 ```
 
@@ -110,6 +116,65 @@
 
 - 只解释 **“为什么这么做”**
 - 不解释显而易见的代码
+
+### 3.3 代码书写规范
+```
+1.每个大方法之间都要空一行。
+2.每个对象、接口、类、方法、参数首尾各要空一行。
+3.@RequestMapping要提取接口公共部分。
+4.各层之间的引用在没有错误的情况下都用@Resource。
+5.xxxMapper.xml的sql语句要有以下规范,需要使用标签,入参必须先判断是否为空
+ - 示例
+```
+    <select id="selectPermsByUserId" resultType="java.lang.String">
+        SELECT
+            DISTINCT m.perms
+        FROM sys_menu m
+        LEFT JOIN sys_role_menu rm ON m.id = rm.menu_id
+        LEFT JOIN sys_role r ON rm.role_id = r.id
+        LEFT JOIN sys_user_role ur ON r.id = ur.role_id
+        <where>
+            m.is_del = '0'
+            AND r.is_del = '0'
+            AND m.perms IS NOT NULL
+            AND m.perms != ''
+            <if test="userId != null and userId != ''">
+                AND ur.user_id = #{userId}
+            </if>
+        </where>
+    </select>
+```
+6.xxxDTO对象要加上@ApiModelProperty注解,描述字段的含义，加了这个注解后可以不需要注释
+ - 示例
+```
+    @ApiModelProperty(value = "当前页码，默认值为1", example = "1L")
+    private Long pageIndex = 1L;
+```
+7.xxxVO对象要加上@ApiModelProperty注解,描述字段的含义，加了这个注解后可以不需要注释。
+ - 示例
+```
+    @ApiModelProperty(value = "当前页码，默认值为1", example = "1L")
+    private Long pageIndex = 1L;
+```
+8.xxxVO用于新增或者修改时,根据业务参数使用@EditType注解
+ - 示例
+ - 新增时
+```
+    @EditType(EditType.INSERT)
+    private String username;
+```
+ - 修改时
+```
+    @EditType(EditType.UPDATE)
+    private String username;
+```
+ - 都要时
+```
+    @EditType({EditType.INSERT, EditType.UPDATE})
+    private String username;
+```
+
+9.注解首先更具功能优先排序,其次根据长度排序
 
 ---
 
@@ -138,13 +203,13 @@ Mapper
     - 调用 Service
 - ❌ 禁止写业务逻辑
 
-#### Service / Application
+#### Service
 
 - 编排业务流程
 - 事务控制
 - 调用多个
 
-#### Domain / Manager
+#### Entity
 
 - 核心业务规则
 - 状态流转校验

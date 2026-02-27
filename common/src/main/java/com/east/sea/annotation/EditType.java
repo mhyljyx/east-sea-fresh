@@ -1,23 +1,28 @@
 package com.east.sea.annotation;
 
+import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 对象内部属性赋值注解,用于控制指定属性赋值
+ * 编辑类型注解
+ * 用于标识字段在新增或修改时的必填校验
+ *
  * @author tztang
- * @since 2025/06/13
+ * @since 2026/02/27
  */
+@Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.FIELD)
+@Documented
 public @interface EditType {
 
-    String INSERT = "insert"; //新增
+    Type[] value() default {};
 
-    String MODIFY = "modify"; //修改
-
-    String[] value(); // 例如 {"create"}, {"modify"}
+    enum Type {
+        INSERT,
+        UPDATE
+    }
 
 }
