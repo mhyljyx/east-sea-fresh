@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.BlockAttackInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.east.sea.handler.MybatisPlusMetaObjectHandler;
+
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -15,8 +17,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * @author tztang
  * @since 2025/06/10
  */
-@EnableTransactionManagement(proxyTargetClass = true)
 @Configuration
+@EnableTransactionManagement(proxyTargetClass = true)
+@MapperScan("com.east.sea.**.mapper")
 public class MybatisPlusConfig {
 
     /**

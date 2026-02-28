@@ -37,6 +37,7 @@
         <common.version>0.0.1-SNAPSHOT</common.version>
         <mysql.version>8.0.15</mysql.version>
         <bcprov-jdk15to18.version>1.78</bcprov-jdk15to18.version>
+        <minio.version>8.5.2</minio.version>
     </properties>
 
     <dependencies>

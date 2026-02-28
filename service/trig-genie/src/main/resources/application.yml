@@ -1,0 +1,42 @@
+server:
+  port: 9600 # 旅小秘系统端口
+
+spring:
+  application:
+    name: trig-genie
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 111.229.109.185:8848 # 假设Nacos地址
+      config:
+        server-addr: 111.229.109.185:8848
+        file-extension: yaml
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://111.229.109.185:3306/east_sea_food?useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    username: remote
+    password: remote123456
+  
+  # Elasticsearch 配置 (示例)
+  elasticsearch:
+    uris: http://111.229.109.185:9200
+  
+  # MinIO 配置 (自定义)
+  minio:
+    endpoint: http://111.229.109.185:9000
+    access-key: minioadmin
+    secret-key: minioadmin
+    bucket-name: trig-genie
+
+# Mybatis Plus
+mybatis-plus:
+  # 关键修复：使用 classpath* 扫描所有依赖 jar 包中的 XML
+  mapper-locations: classpath*:/mapper/**/*.xml
+  global-config:
+    db-config:
+      logic-delete-field: is_del
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+      id-type: auto

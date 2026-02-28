@@ -1,186 +1,76 @@
----
-## 一、总体目标
+# 一、AI 执行总原则（最高优先级）
 
-1. **一致性优先**：AI 生成的代码风格、命名、结构必须与 QOrder 现有代码保持一致
-2. **可维护性优先**：可读性 > 炫技；明确 > 晦涩；稳定 > 复杂
-3. **工程化思维**：默认代码用于生产系统，而非 Demo
-4. **最小侵入原则**：在已有架构下补充，而不是推倒重来
-5. **安全第一**：默认考虑权限、校验、异常、边界条件
-6. 思考前先同步一下本地文件
+## 1.1 基础原则
 
+1. 一致性优先 > 创新
+2. 稳定性优先 > 优雅
+3. 可读性优先 > 技巧
+4. 最小改动优先 > 重构
+5. 安全优先 > 便捷
 
----
+------
 
-## 二、技术栈约束（AI 必须遵守）
+## 1.2 AI 输出前强制步骤
 
-### 后端技术栈
+AI 在生成代码前必须：
 
-- **语言**：Java 8+
-- **框架**：Spring Boot
-- **ORM**：MyBatis-Plus
-- **数据库**：MySQL8/kingbaseV8R6
-- **缓存**：Redis
-- **鉴权**：JWT
-- **构建工具**：Maven
+- ✅ 说明对业务的理解
+- ✅ 明确修改范围
+- ✅ 说明是否新增类
+- ✅ 说明是否新增字段
+- ✅ 说明是否涉及事务
+- ❌ 禁止直接大段输出代码
 
-### 禁止行为
+------
 
-- ❌ 引入与现有架构冲突的框架（如 JPA、Hibernate）
-- ❌ 随意升级 JDK 大版本
-- ❌ 引入“看起来高级但无实际收益”的新技术
+## 1.3 决策原则
 
----
+当规则与现有代码冲突时：
 
-## 三、代码风格规范
+> 以现有代码风格为最高优先级
 
-### 3.1 命名规范
+------
 
-#### 包名
+# 二、技术栈强约束（不可突破）
 
-- 全小写,按业务域拆分,基础包名controller,service,service/impl,pojo,pojo/entity,pojo/vo,pojo/dto,pojo/response,mapper
-- 解释：
-- ```
-  entity（数据库实体）：和数据库表一一对应
-  dto（数据传输对象）：服务层之间传输数据
-  vo（视图对象）：返回给前端的数据结构
-  response（统一返回结构）
-  ```
+## 2.1 固定技术栈
 
-- 示例：
+| 分类   | 技术                  |
+| ------ | --------------------- |
+| 语言   | Java 8+               |
+| 框架   | Spring Boot           |
+| ORM    | MyBatis-Plus          |
+| 数据库 | MySQL8 / KingbaseV8R6 |
+| 缓存   | Redis                 |
+| 鉴权   | JWT                   |
+| 构建   | Maven                 |
 
-  ```
-  com.xinran.pam
-  com.xinran.pam.service
-  com.xinran.pam.alarm
-  ```
+------
 
-#### 类名
+## 2.2 严禁行为
 
-- 使用 **模块缩写+业务 + 职责** 命名
-- 示例：
-    - `AcAccessService`
-    - `VisDeviceApiService`
-    - `AcDoorStatusEnum`
-    - `CmUserEntity`
-    - `CmUserQueryDTO`
-    - `CmUserVO`
+- ❌ 引入 JPA / Hibernate
+- ❌ 升级 JDK 大版本
+- ❌ 引入响应式编程
+- ❌ 引入微服务拆分
+- ❌ 引入架构级重构
+- ❌ 使用未知第三方工具类
 
-#### 方法名
+如确实需要新增技术：
 
-- 动词开头，表达“做什么”
-- 禁止模糊动词：`do`, `handle`, `process`
-- 推荐示例：
-    - `addAlarmHost`
-    - `delAlarmHost`
-    - `updateAlarmHost`
-    - `getAlarmHost`
+必须说明：
 
-#### 变量名
+1. 为什么当前方案无法满足
+2. 风险评估
+3. 替代方案对比
 
-- 语义明确，禁止缩写
-- ❌ `cnt`, `tmp`, `obj`
-- ✅ `orderCount`, `orderEntity`
+否则禁止使用。
 
----
+------
 
-### 3.2 注释规范
+# 三、分层结构强制规范
 
-#### 类注释（必写）
-
-```java
-/**
- * 订单创建服务
- *
- * 负责订单创建、校验及初始化逻辑
- * @author tztang
- * 日期
- */
-```
-
-#### 方法注释（对外方法必写）
-
-```java
-/**
- * 创建订单
- *
- * @param command 创建订单参数
- * @return 订单ID
- */
-```
-
-#### 行内注释
-
-```
-//创建订单
-```
-
-- 只解释 **“为什么这么做”**
-- 不解释显而易见的代码
-
-### 3.3 代码书写规范
-```
-1.每个大方法之间都要空一行。
-2.每个对象、接口、类、方法、参数首尾各要空一行。
-3.@RequestMapping要提取接口公共部分。
-4.各层之间的引用在没有错误的情况下都用@Resource。
-5.xxxMapper.xml的sql语句要有以下规范,需要使用标签,入参必须先判断是否为空
- - 示例
-```
-    <select id="selectPermsByUserId" resultType="java.lang.String">
-        SELECT
-            DISTINCT m.perms
-        FROM sys_menu m
-        LEFT JOIN sys_role_menu rm ON m.id = rm.menu_id
-        LEFT JOIN sys_role r ON rm.role_id = r.id
-        LEFT JOIN sys_user_role ur ON r.id = ur.role_id
-        <where>
-            m.is_del = '0'
-            AND r.is_del = '0'
-            AND m.perms IS NOT NULL
-            AND m.perms != ''
-            <if test="userId != null and userId != ''">
-                AND ur.user_id = #{userId}
-            </if>
-        </where>
-    </select>
-```
-6.xxxDTO对象要加上@ApiModelProperty注解,描述字段的含义，加了这个注解后可以不需要注释
- - 示例
-```
-    @ApiModelProperty(value = "当前页码，默认值为1", example = "1L")
-    private Long pageIndex = 1L;
-```
-7.xxxVO对象要加上@ApiModelProperty注解,描述字段的含义，加了这个注解后可以不需要注释。
- - 示例
-```
-    @ApiModelProperty(value = "当前页码，默认值为1", example = "1L")
-    private Long pageIndex = 1L;
-```
-8.xxxVO用于新增或者修改时,根据业务参数使用@EditType注解
- - 示例
- - 新增时
-```
-    @EditType(EditType.INSERT)
-    private String username;
-```
- - 修改时
-```
-    @EditType(EditType.UPDATE)
-    private String username;
-```
- - 都要时
-```
-    @EditType({EditType.INSERT, EditType.UPDATE})
-    private String username;
-```
-
-9.注解首先更具功能优先排序,其次根据长度排序
-
----
-
-## 四、分层与职责边界
-
-### 4.1 标准分层
+## 3.1 标准分层
 
 ```
 Controller
@@ -192,141 +82,314 @@ Entity
 Mapper
 ```
 
-### 4.2 各层职责
+------
 
-#### Controller
+## 3.2 禁止跨层调用
 
-- 只做：
-    - 参数接收
-    - 参数校验
-    - 权限校验
-    - 调用 Service
-- ❌ 禁止写业务逻辑
+- ❌ Controller 调 Mapper
+- ❌ Mapper 调 Service
+- ❌ Entity 依赖 Spring 组件
 
-#### Service
+------
 
-- 编排业务流程
-- 事务控制
-- 调用多个
+## 3.3 各层职责
 
-#### Entity
+### Controller
 
-- 核心业务规则
+仅允许：
+
+- 参数接收
+- 参数校验
+- 权限校验
+- 调用 Service
+
+禁止：
+
+- 业务逻辑
+- 数据库逻辑
+- 复杂判断流程
+
+------
+
+### Service
+
+职责：
+
+- 业务流程编排
 - 状态流转校验
-- 不感知 HTTP、JSON
+- 事务控制
+- 调用多个 Mapper
 
-#### Mapper
+要求：
 
-- 只做数据库操作
-- 禁止拼装业务对象
+- 写操作必须加 `@Transactional`
+- 不允许吞异常
+- 统一抛业务异常
 
----
+------
 
-## 五、DTO / Entity / VO 使用规范
+### Mapper
 
-### 5.1 对象职责
+职责：
+
+- 纯数据库访问
+- 不封装业务对象
+- 不写复杂判断逻辑
+
+------
+
+# 四、对象使用强制规范
+
+## 4.1 类型职责
 
 | 类型   | 用途       |
 | ------ | ---------- |
-| DTO | 接口入参   |
+| DTO    | 接口入参   |
 | Entity | 数据库映射 |
-| VO   | 接口出参   |
+| VO     | 接口出参   |
 
-### 5.2 强制规则
+------
 
-- ❌ Entity 不允许直接作为 Controller 出参
-- ❌ DTO/View不允许直接落库
-- ✅ 明确对象转换层（Converter）
+## 4.2 强制规则
 
----
+- ❌ Entity 禁止作为接口返回
+- ❌ DTO 禁止直接入库
+- ❌ VO 禁止入库
+- ✅ 必须存在 Converter 层
 
-## 六、异常与返回规范
+转换流程必须明确：
 
-### 6.1 异常处理
+```
+DTO → Entity
+Entity → VO
+```
 
-- 使用 **业务异常 + 错误码**
-- 禁止直接 `throw RuntimeException`
+------
 
-```java
+# 五、命名与代码风格规范
+
+## 5.1 包名
+
+- 全小写
+- 按业务域拆分
+- 基础包结构固定：
+
+```
+controller
+service
+service.impl
+pojo
+pojo.entity
+pojo.dto
+pojo.vo
+pojo.response
+mapper
+```
+
+------
+
+## 5.2 类名规则
+
+格式：
+
+```
+模块缩写 + 业务 + 职责
+```
+
+示例：
+
+```
+QOOrderService
+QOOrderEntity
+QOOrderQueryDTO
+QOOrderVO
+```
+
+------
+
+## 5.3 方法命名
+
+必须动词开头：
+
+- addXxx
+- updateXxx
+- deleteXxx
+- getXxx
+- listXxx
+
+禁止：
+
+- doXxx
+- handleXxx
+- processXxx
+
+------
+
+## 5.4 变量命名
+
+禁止：
+
+```
+tmp
+obj
+data
+cnt
+```
+
+必须语义明确：
+
+```
+orderCount
+orderEntity
+userStatus
+```
+
+------
+
+# 六、注释规范
+
+## 6.1 类注释（必写）
+
+```
+/**
+ * 订单创建服务
+ *
+ * 负责订单创建、校验及初始化逻辑
+ * @author tztang
+ */
+```
+
+------
+
+## 6.2 方法注释（对外方法必写）
+
+```
+/**
+ * 创建订单
+ *
+ * @param command 创建订单参数
+ * @return 订单ID
+ */
+```
+
+------
+
+## 6.3 行内注释
+
+- 只解释“为什么”
+- 不解释显而易见代码
+
+------
+
+# 七、代码书写规范
+
+1. 大方法之间必须空一行
+2. 类、接口、方法、参数首尾必须空一行
+3. 使用 `@Resource`，禁止 `@Autowired`
+4. `@RequestMapping` 必须提取公共路径
+5. 注解排序：
+   - 先按功能分组
+   - 再按长度排序
+6. 默认使用 POST 请求
+7. 所有的分页查询的XXXVO都要继承PageDTO
+
+------
+
+# 八、SQL 强制规范
+
+## 8.1 查询规则
+
+- ❌ 禁止 SELECT *
+- 必须明确字段
+- 必须使用 `<where>`
+- 入参必须判断为空
+- 批量查询必须分页
+
+------
+
+## 8.2 表设计强制字段
+
+- id
+- create_time
+- update_time
+- is_del
+
+------
+
+# 九、异常与返回规范
+
+## 9.1 异常规则
+
+必须：
+
+```
 throw new CustomException(OrderErrorCode.ORDER_STATUS_INVALID);
 ```
 
-### 6.2 错误码规范
+禁止：
 
-- 模块级前缀
-- 示例：
-    - `QO-ORDER-001` 订单不存在
-    - `QO-ORDER-002` 订单状态非法
-
----
-
-## 七、数据库与 SQL 规范
-
-### 表设计
-
-- 必须包含：
-    - `id`
-    - `create_time`
-    - `update_time`
-    - `is_del`
-
-### SQL 规范
-
-- 禁止 `SELECT *`
-- 明确字段
-- 大批量操作必须分页
-
----
-
-## 八、AI 编码行为约束（核心）
-
-AI 在 QOrder 项目中 **必须遵守以下行为准则**：
-
-1. **先理解业务，再写代码**
-2. **不确定时，优先给设计建议，而不是直接拍代码**
-3. **新增代码前，优先复用已有结构**
-4. **任何“看起来很高级”的设计，必须说明必要性**
-5. **默认写单元可测试的代码**
-
-### AI 禁止行为
-
-- ❌ 臆测数据库结构
-- ❌ 编造不存在的公共工具类
-- ❌ 擅自重构用户未要求的模块
-
----
-
-## 九、示例：标准 Service 模板
-
-```java
-public interface AlarmHostService extends IService<AlarmHostEntity> {
-    public Long createOrder(CreateOrderCommand command);
-}
-
-@Service
-public class AlarmHostServiceImpl extends ServiceImpl<AlarmHostMapper, AlarmHostEntity> implements AlarmHostService  {
-
-    @Transactional(rollbackFor = Exception.class)
-    @Override
-    public Result addAlarmHost(AlarmHostAddParams params) {
-        AlarmHostEntity order = AlarmHostEntity();
-        orderMapper.insert(order);
-        BeanUtil.copyProperties(params, alarmHost);
-        this.baseMapper.insert(alarmHost);
-        return Result.success();
-    }
-    
-}
+```
+throw new RuntimeException();
 ```
 
----
+------
 
-## 十、适用说明
+## 9.2 错误码格式
 
-- 本规范适用于：
-    - AI 生成代码
-    - AI 重构代码
-    - AI 代码评审
-- 当规范与实际项目冲突时：
-  **以 现有代码风格为最高优先级**
+```
+QO-模块-编号
+```
 
+示例：
+
+```
+QO-ORDER-001
+QO-ORDER-002
+```
+
+------
+
+# 十、AI 行为约束（核心）
+
+## 10.1 AI 必须遵守
+
+- 先解释设计，再写代码
+- 优先复用现有类
+- 不确定时提出设计建议
+- 默认写可测试代码
+- 说明事务边界
+- 不省略空行规范
+
+------
+
+## 10.2 AI 严禁行为
+
+- ❌ 臆测数据库结构
+- ❌ 编造不存在工具类
+- ❌ 擅自重构未要求模块
+- ❌ 输出超长无解释代码
+- ❌ 改变架构风格
+
+------
+
+# 十一、AI 输出格式规范（强制）
+
+AI 必须按顺序输出：
+
+```
+1. 业务理解
+2. 设计说明
+3. 修改点说明
+4. 代码实现
+5. 影响范围说明
+```
+
+------
+
+# 十二、适用范围
+
+本规范适用于：
+
+- AI 生成代码
+- AI 重构代码
+- AI 代码评审

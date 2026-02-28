@@ -14,8 +14,8 @@ import lombok.EqualsAndHashCode;
  * @since 2026/02/27
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
 @TableName("sys_user")
+@EqualsAndHashCode(callSuper = true)
 public class SysUserEntity extends BaseTablePropertyEntity {
 
     /**

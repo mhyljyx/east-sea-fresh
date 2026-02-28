@@ -18,11 +18,10 @@ import java.lang.annotation.Target;
 @Documented
 public @interface EditType {
 
-    Type[] value() default {};
+    String INSERT = "insert";
 
-    enum Type {
-        INSERT,
-        UPDATE
-    }
+    String UPDATE = "update";
+
+    String[] value() default {};
 
 }

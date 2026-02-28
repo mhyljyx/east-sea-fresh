@@ -4,6 +4,7 @@ import com.east.sea.annotation.EditType;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * 属性赋值工具类，用于复制对象属性
@@ -36,20 +37,31 @@ public class CopyUtil {
      *
      * @param from   源对象（不需要加注解）
      * @param target 目标对象（字段上带有 @EditType 注解）
-     * @param eType  控制字段是否复制的操作类型（如 "create"、"modify"）
+     * @param types  控制字段是否复制的操作类型（如 "create"、"modify"）
      *
      * @throws RuntimeException 如果字段访问失败或赋值异常
      */
-    public static void copyProperties(Object from, Object target, String eType) {
+    public static void copyProperties(Object from, Object target, String... types) {
+        if (from == null || target == null || types == null || types.length == 0) {
+            return;
+        }
+        List<String> typeList = Arrays.asList(types);
         for (Field targetField : target.getClass().getDeclaredFields()) {
             EditType editType = targetField.getAnnotation(EditType.class);
-            if (editType == null ||
-                    Arrays.stream(editType.value()).noneMatch(eType::equals)) {
+            // 如果没有标注，直接跳过
+            if (editType == null) {
+                continue;
+            }
+            // 判断是否匹配任意一种类型
+            boolean match = Arrays.stream(editType.value()).anyMatch(typeList::contains);
+            if (!match) {
                 continue;
             }
             try {
                 Field fromField = from.getClass().getDeclaredField(targetField.getName());
-                if (!fromField.getType().equals(targetField.getType())) continue;
+                if (!fromField.getType().equals(targetField.getType())) {
+                    continue;
+                }
                 fromField.setAccessible(true);
                 targetField.setAccessible(true);
                 Object value = fromField.get(from);
@@ -78,7 +90,7 @@ public class CopyUtil {
      * <pre>{@code
      *     UserDto from = new UserDto();
      *     UserEntity target = new UserEntity();
-     *     BeanUtils.copyProperties(from, target);
+     *     CopyUtil.copyProperties(from, target);
      * }</pre>
      *
      * @param from   源对象（提供字段值）

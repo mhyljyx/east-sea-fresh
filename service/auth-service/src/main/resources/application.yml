@@ -6,3 +6,18 @@ spring:
     url: jdbc:mysql://111.229.109.185:3306/east_sea_food?useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=true
     username: remote
     password: remote123456
+    hikari:
+      # 连接池中连接的最长生命周期（毫秒），建议比数据库的 wait_timeout 短。MySQL 默认 8 小时，但云数据库可能更短。
+      # 推荐设置为 10-30 分钟 (600000 - 1800000)，这里设为 10 分钟。
+      max-lifetime: 600000
+      # 连接空闲多久后被回收（毫秒），默认 10 分钟。
+      idle-timeout: 300000
+      # 连接超时时间（毫秒），默认 30 秒。
+      connection-timeout: 30000
+      # 最小空闲连接数，默认与 maximum-pool-size 相等（即固定大小）。
+      # 为了让 idle-timeout 生效，必须设置 minimum-idle < maximum-pool-size。
+      minimum-idle: 5
+      # 最大连接数，默认 10
+      maximum-pool-size: 20
+      # 用于测试连接是否有效的 SQL 查询
+      connection-test-query: SELECT 1

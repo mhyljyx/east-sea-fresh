@@ -1,10 +1,13 @@
 package com.east.sea.controller;
 
+import cn.hutool.core.collection.CollUtil;
 import com.east.sea.common.ApiResponse;
 import com.east.sea.pojo.dto.sys.SysUserLoginDTO;
 import com.east.sea.pojo.vo.sys.SysTokenVO;
+import com.east.sea.pojo.vo.sys.SysUserVO;
 import com.east.sea.security.SysUserDetails;
 import com.east.sea.service.AuthService;
+import com.east.sea.util.CopyUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.security.core.Authentication;
@@ -62,7 +65,9 @@ public class AuthController {
         SysUserDetails userDetails = (SysUserDetails) authentication.getPrincipal();
         
         Map<String, Object> data = new HashMap<>();
-        data.put("user", userDetails.getSysUser());
+        SysUserVO sysUserVO = new SysUserVO();
+        CopyUtil.copyProperties(userDetails.getSysUser(), sysUserVO);
+        data.put("user", sysUserVO);
         data.put("permissions", userDetails.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority).collect(Collectors.toList()));
         

@@ -16,7 +16,7 @@
     <description>旅小秘服务</description>
 
     <modules>
-        <module>trig-Genie</module>
+        <module>trig-genie</module>
         <module>common-service</module>
         <module>auth-service</module>
         <module>gateway-service</module>

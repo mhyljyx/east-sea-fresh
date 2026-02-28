@@ -3,6 +3,7 @@ package com.east.sea.pojo.entity;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableLogic;
+import lombok.Data;
 
 import java.util.Date;
 
@@ -11,6 +12,7 @@ import java.util.Date;
  * @author tztang
  * @since 2025/06/10
  **/
+@Data
 public class BaseTablePropertyEntity {
 
     /**
