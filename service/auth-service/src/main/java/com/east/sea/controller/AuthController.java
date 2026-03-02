@@ -1,18 +1,11 @@
 package com.east.sea.controller;
 
-import cn.hutool.core.collection.CollUtil;
 import com.east.sea.common.ApiResponse;
 import com.east.sea.pojo.dto.sys.SysUserLoginDTO;
 import com.east.sea.pojo.vo.sys.SysTokenVO;
-import com.east.sea.pojo.vo.sys.SysUserVO;
-import com.east.sea.security.SysUserDetails;
 import com.east.sea.service.AuthService;
-import com.east.sea.util.CopyUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,9 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * 认证控制器
@@ -49,8 +40,7 @@ public class AuthController {
     @PostMapping("login")
     @ApiOperation(value = "用户登录")
     public ApiResponse<SysTokenVO> login(@RequestBody @Valid SysUserLoginDTO loginDTO) {
-        SysTokenVO tokenVO = authService.login(loginDTO);
-        return ApiResponse.ok(tokenVO);
+        return ApiResponse.ok(authService.login(loginDTO));
     }
 
     /**
@@ -61,18 +51,7 @@ public class AuthController {
     @GetMapping("info")
     @ApiOperation(value = "获取当前用户信息")
     public ApiResponse<Map<String, Object>> info() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        SysUserDetails userDetails = (SysUserDetails) authentication.getPrincipal();
-        
-        Map<String, Object> data = new HashMap<>();
-        SysUserVO sysUserVO = new SysUserVO();
-        CopyUtil.copyProperties(userDetails.getSysUser(), sysUserVO);
-        data.put("user", sysUserVO);
-        data.put("permissions", userDetails.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority).collect(Collectors.toList()));
-        
-        return ApiResponse.ok(data);
+        return ApiResponse.ok(authService.info());
     }
 
 }
-

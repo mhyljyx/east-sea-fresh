@@ -1,21 +1,27 @@
 package com.east.sea.service.impl;
 
+import com.east.sea.enums.BaseCode;
+import com.east.sea.exception.BusinessFrameException;
 import com.east.sea.jwt.TokenUtil;
 import com.east.sea.pojo.dto.sys.SysUserLoginDTO;
 import com.east.sea.pojo.vo.sys.SysTokenVO;
+import com.east.sea.pojo.vo.sys.SysUserVO;
+import com.east.sea.security.SysUserDetails;
 import com.east.sea.service.AuthService;
+import com.east.sea.util.CopyUtil;
 import org.springframework.security.authentication.AuthenticationManager;
-import com.east.sea.enums.BaseCode;
-import com.east.sea.exception.BusinessFrameException;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 /**
  * 认证服务实现
@@ -46,6 +52,20 @@ public class AuthServiceImpl implements AuthService {
             // 捕获认证异常，抛出自定义业务异常
             throw new BusinessFrameException(BaseCode.NAME_PASSWORD_ERROR);
         }
+    }
+
+    @Override
+    public Map<String, Object> info() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        SysUserDetails userDetails = (SysUserDetails) authentication.getPrincipal();
+
+        Map<String, Object> data = new HashMap<>();
+        SysUserVO sysUserVO = new SysUserVO();
+        CopyUtil.copyProperties(userDetails.getSysUser(), sysUserVO);
+        data.put("user", sysUserVO);
+        data.put("permissions", userDetails.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority).collect(Collectors.toList()));
+        return data;
     }
 
 }
