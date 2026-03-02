@@ -7,8 +7,6 @@ import com.east.sea.pojo.entity.BaseTablePropertyEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.io.Serializable;
-
 /**
  * 目的地实体
  * 
@@ -19,9 +17,7 @@ import java.io.Serializable;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName("tg_destination")
-public class TgDestinationEntity extends BaseTablePropertyEntity implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class TgDestinationEntity extends BaseTablePropertyEntity {
 
     /**
      * 主键

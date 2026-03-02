@@ -19,16 +19,16 @@ spring:
     username: remote
     password: remote123456
   
-  # Elasticsearch 配置 (示例)
+  # Elasticsearch 配置
   elasticsearch:
     uris: http://111.229.109.185:9200
   
-  # MinIO 配置 (自定义)
-  minio:
-    endpoint: http://111.229.109.185:9000
-    access-key: minioadmin
-    secret-key: minioadmin
-    bucket-name: trig-genie
+# MinIO 配置 (自定义)
+minio:
+  endpoint: http://111.229.109.185:9100
+  access-key: admin
+  secret-key: admin123
+  bucket-name: trig-genie
 
 # Mybatis Plus
 mybatis-plus:

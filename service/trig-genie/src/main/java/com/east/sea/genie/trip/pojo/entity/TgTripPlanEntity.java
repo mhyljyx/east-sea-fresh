@@ -1,4 +1,4 @@
-package com.east.sea.genie.strategy.pojo.entity;
+package com.east.sea.genie.trip.pojo.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -7,17 +7,18 @@ import com.east.sea.pojo.entity.BaseTablePropertyEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.time.LocalDate;
+
 /**
- * 攻略实体
- * 
- * 对应数据库表 tg_strategy
- * @author  tztang
- * @since 2026-02-27
+ * 行程单实体
+ *
+ * @author TraeAI
+ * @since 2026-02-28
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("tg_strategy")
-public class TgStrategyEntity extends BaseTablePropertyEntity {
+@TableName("tg_trip_plan")
+public class TgTripPlanEntity extends BaseTablePropertyEntity {
 
     /**
      * 主键
@@ -26,37 +27,32 @@ public class TgStrategyEntity extends BaseTablePropertyEntity {
     private Long id;
 
     /**
-     * 关联目的地ID
-     */
-    private Long destId;
-
-    /**
-     * 作者ID
+     * 用户ID
      */
     private Long userId;
 
     /**
-     * 标题
+     * 行程标题
      */
     private String title;
 
     /**
-     * 内容
+     * 开始日期
      */
-    private String content;
+    private LocalDate startDate;
 
     /**
-     * 分类（1:美食 2:景点 3:路线）
+     * 结束日期
      */
-    private Integer category;
+    private LocalDate endDate;
 
     /**
-     * 状态（0:草稿 1:发布 2:下架）
+     * 天数
      */
-    private Integer status;
+    private Integer dayCount;
 
     /**
-     * 浏览量
+     * 隐私（0:公开 1:私密）
      */
-    private Integer viewCount;
+    private Integer privacy;
 }
