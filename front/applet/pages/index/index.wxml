@@ -1,0 +1,4 @@
+<view class="container">
+  <canvas type="2d" id="mapCanvas" class="map-canvas" bindtouchstart="onTouchStart" bindtouchmove="onTouchMove" bindtouchend="onTouchEnd"></canvas>
+  <view wx:if="{{currentCity}}" class="reset-btn" bindtap="resetMap">返回全省</view>
+</view>

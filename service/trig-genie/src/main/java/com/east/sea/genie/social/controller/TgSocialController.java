@@ -12,6 +12,7 @@ import com.east.sea.pojo.vo.PageResult;
 import com.east.sea.util.PageApiResponseUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,12 +38,14 @@ public class TgSocialController {
 
     @ApiOperation("发布游记/动态")
     @PostMapping("publish")
+    @PreAuthorize("hasAuthority('social:publish')")
     public ApiResponse<Boolean> publish(@RequestBody @Valid TgTravelLogDTO logDTO) {
         return ApiResponse.ok(travelLogService.publish(logDTO));
     }
 
     @ApiOperation("获取动态列表(Feed流)")
     @GetMapping("feed")
+    @PreAuthorize("hasAuthority('social:feed')")
     public ApiResponse<PageResult<TgTravelLogVO>> feed(@RequestBody TgSocialFeedDTO socialFeedDTO) {
         Page<TgTravelLogVO> page = travelLogService.feed(socialFeedDTO);
         return PageApiResponseUtil.buildPageApiResponse(page);
@@ -50,6 +53,7 @@ public class TgSocialController {
 
     @ApiOperation("互动操作(点赞/收藏/关注)")
     @PostMapping("action")
+    @PreAuthorize("hasAuthority('social:action')")
     public ApiResponse<Boolean> action(@RequestBody @Valid TgInteractionDTO interactionDTO) {
         return ApiResponse.ok(interactionService.action(interactionDTO));
     }

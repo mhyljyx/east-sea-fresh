@@ -2,6 +2,7 @@ package com.east.sea.controller;
 
 import com.east.sea.common.ApiResponse;
 import com.east.sea.pojo.dto.sys.SysUserLoginDTO;
+import com.east.sea.pojo.dto.sys.SysUserRegisterDTO;
 import com.east.sea.pojo.vo.sys.SysTokenVO;
 import com.east.sea.service.AuthService;
 import io.swagger.annotations.Api;
@@ -41,6 +42,18 @@ public class AuthController {
     @ApiOperation(value = "用户登录")
     public ApiResponse<SysTokenVO> login(@RequestBody @Valid SysUserLoginDTO loginDTO) {
         return ApiResponse.ok(authService.login(loginDTO));
+    }
+
+    /**
+     * 用户注册
+     *
+     * @param registerDTO 用户注册
+     */
+    @PostMapping("register")
+    @ApiOperation(value = "用户注册")
+    public ApiResponse<Void> register(@RequestBody @Valid SysUserRegisterDTO registerDTO) {
+        authService.register(registerDTO);
+        return ApiResponse.ok();
     }
 
     /**

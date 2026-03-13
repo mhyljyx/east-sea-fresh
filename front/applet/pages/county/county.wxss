@@ -1,0 +1,27 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.title {
+  font-size: 18px;
+  margin: 12px 0;
+}
+.map-canvas {
+  width: 100vw;
+  height: 50vh;
+}
+.list {
+  width: 92vw;
+  margin-top: 10px;
+  background: #fff;
+  border-radius: 8px;
+  padding: 10px;
+}
+.item {
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+}
+.item:last-child {
+  border-bottom: none;
+}

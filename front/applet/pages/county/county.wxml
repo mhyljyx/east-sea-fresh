@@ -1,0 +1,11 @@
+<view class="container">
+  <text class="title">{{city}}</text>
+  <canvas type="2d" id="countyCanvas" class="map-canvas"></canvas>
+  <view wx:if="{{counties && counties.length}}">
+    <view class="list">
+      <block wx:for="{{counties}}" wx:key="*this">
+        <view class="item">{{item}}</view>
+      </block>
+    </view>
+  </view>
+</view>

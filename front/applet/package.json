@@ -1,0 +1,9 @@
+{
+  "name": "trig-genie-applet",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Zhejiang interactive map mini program",
+  "engines": {
+    "node": "18.19.0"
+  }
+}
